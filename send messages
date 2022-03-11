@@ -1,0 +1,45 @@
+from twilio.rest import Client
+import requests
+from bs4 import BeautifulSoup
+url = "https://www.w3schools.com/python/python_for_loops.asp"
+# step 1 : get the html
+r = requests.get(url)
+HtmlContent = r.content
+
+# step 2 parse the html
+soup = BeautifulSoup(HtmlContent, 'html.parser')
+
+#3 html tree traversal
+
+paras = soup.find_all('p')
+
+# gettexts = soup.find('p').getText()
+# print(gettexts)
+# print(soup.getText())
+
+# gettext = soup.getText())
+arr = soup.getText()
+for a in arr:
+   if len(arr)<=160:
+         print(a)
+   elif len(arr)>=160:
+       print(a[161:132])
+   else :
+    print(a[321:480])
+
+
+    
+
+account_sid = "ACd57f402fb65426b07bb5d9eecb1066ab"
+auth_token = "8d32d32e478e698de752723abc88b3ae"
+client = Client(account_sid, auth_token)
+
+message = client.messages.create(
+
+ body= "msg is " + arr[1:160] +  arr[161:320] + arr[321:480] +  arr[481:640]
+, 
+  from_='[+][1] [5402534002]',
+  to= '[+][91]  {9735105301]'
+)
+
+print(message.sid)
